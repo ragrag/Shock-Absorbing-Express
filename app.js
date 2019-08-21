@@ -3,7 +3,7 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const helmet = require('helmet');
 const apiRouter = require('./routes/api');
-
+const errorHandle = require('./app/Utils/middlewares/errorHandler');
 const app = express();
 
 require('dotenv').config();
@@ -17,5 +17,5 @@ app.use(cookieParser());
 
 // Setting API Route
 app.use('/api', apiRouter);
-
+app.use(errorHandle);
 module.exports = app;

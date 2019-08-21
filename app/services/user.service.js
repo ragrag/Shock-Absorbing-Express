@@ -1,9 +1,9 @@
-const Boom = require('boom');
 const bcrypt = require('bcrypt');
+const Boom = require('boom');
 const UserModel = require('../models/user.model');
 
 class UserService {
-  static async createUser(userDTO) {
+  static async register(userDTO) {
     try {
       const user = await UserModel.createUser(userDTO);
       const token = user.generateAuthToken();
@@ -13,7 +13,7 @@ class UserService {
     }
   }
 
-  static async authenticateUser(userDTO) {
+  static async login(userDTO) {
     try {
       const user = await UserModel.getUser(userDTO.email);
       if (!user) throw Boom.badRequest("User doesn't exist");
