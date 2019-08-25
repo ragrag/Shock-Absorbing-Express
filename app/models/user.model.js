@@ -41,9 +41,4 @@ UserModel.createUser = async (userDTO) => {
   }
 };
 
-UserModel.getUser = async (email) => {
-  const user = await UserModel.findOne({ email: email });
-  return user;
-};
-
 module.exports = UserModel;

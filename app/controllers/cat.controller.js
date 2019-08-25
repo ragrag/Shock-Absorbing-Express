@@ -8,7 +8,6 @@ class CatController {
   }
 
   static async store(req, res) {
-    console.log(req.user);
     try {
       const { name } = req.body;
       const { error } = validateCat(name);

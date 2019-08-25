@@ -7,6 +7,7 @@ class UserController {
   static async registerUser(req, res, next) {
     try {
       const userDTO = _.pick(req.body, ['name', 'email', 'password']);
+      console.log(req.body.email);
       const { error } = validateUserRegister(userDTO);
       if (error) throw Boom.badRequest(error.details[0].message);
       const { user, token } = await UserService.register(userDTO);

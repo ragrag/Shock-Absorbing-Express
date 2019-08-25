@@ -15,7 +15,7 @@ class UserService {
 
   static async login(userDTO) {
     try {
-      const user = await UserModel.getUser(userDTO.email);
+      const user = await UserModel.findOne({ email: userDTO.email });
       if (!user) throw Boom.badRequest("User doesn't exist");
       const validPassword = await bcrypt.compare(userDTO.password, user.password);
       if (!validPassword) throw Boom.unauthorized('Incorrect password');
