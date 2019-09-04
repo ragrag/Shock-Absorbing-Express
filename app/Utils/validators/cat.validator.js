@@ -2,7 +2,9 @@ const Joi = require('joi');
 
 module.exports.validateCat = (name) => {
   const schema = {
-    name: Joi.string().required()
+    name: Joi.string()
+      .max(255)
+      .required()
   };
   return Joi.validate({ name }, schema);
 };

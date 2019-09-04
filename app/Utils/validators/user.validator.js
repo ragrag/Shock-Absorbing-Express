@@ -4,8 +4,10 @@ module.exports.validateUserRegister = (userDTO) => {
   const schema = {
     name: Joi.string()
       .min(3)
+      .max(255)
       .required(),
     email: Joi.string()
+      .max(255)
       .required()
       .email(),
     password: Joi.string().required()
@@ -16,6 +18,7 @@ module.exports.validateUserRegister = (userDTO) => {
 module.exports.validateUserLogin = (userDTO) => {
   const schema = {
     email: Joi.string()
+      .max(255)
       .required()
       .email(),
     password: Joi.string().required()

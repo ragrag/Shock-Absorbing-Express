@@ -21,7 +21,7 @@ app.set('port', port);
  * Create HTTP server.
  */
 
-var server = http.createServer(app);
+const server = http.createServer(app);
 
 /**
  * Listen on provided port, on all network interfaces.
@@ -90,3 +90,5 @@ function onListening() {
   console.log(`Express Server Listening On Port ${addr.port}`);
   debug('Listening on ' + bind);
 }
+
+module.exports = server;
