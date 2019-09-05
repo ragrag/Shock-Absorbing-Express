@@ -13,8 +13,8 @@ router.post('/login', UserController.loginUser);
 
 /* Cat routes */
 router.get('/cats', CatController.index);
-router.post('/cats', CatController.store);
-router.get('/cats/:id', [passport.authenticate('jwt', { session: false }), validateId], CatController.show);
+router.post('/cats', [passport.authenticate('jwt', { session: false })], CatController.store);
+router.get('/cats/:id', [validateId], CatController.show);
 router.put('/cats/:id', CatController.update);
 router.delete('/cats/:id', CatController.destroy);
 
