@@ -4,22 +4,48 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
 const UserSchema = new mongoose.Schema({
-  name: {
-    type: String,
-    required: true
+  displayName: {
+    type: String
   },
-  email: {
+  username: {
     type: String,
     required: true,
     unique: true
   },
-  password: {
+  email: {
     type: String,
-    required: true
+    required: true,
+    lowercase: true,
+    unique: true
   },
-  provider: String
+  password: {
+    type: String
+  },
+  photo: {
+    type: String
+  },
+  followers: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User'
+    }
+  ],
+  following: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User'
+    }
+  ],
+  socialProvider: {
+    provider: {
+      type: String
+    },
+    providerId: {
+      type: String
+    }
+  }
 });
-
+UserSchema.set('timestamps', true);
 mongoose.set('useCreateIndex', true);
 
 UserSchema.methods.generateAuthToken = function() {
@@ -31,8 +57,10 @@ const UserModel = mongoose.model('user', UserSchema);
 
 UserModel.createUser = async (userDTO) => {
   try {
-    let user = await UserModel.findOne({ email: userDTO.email });
-    if (user) throw Boom.conflict('User already registerd');
+    let user = await UserModel.find({ $or: [{ email: userDTO.email }, { username: userDTO.username }] });
+    if (user.length > 0) {
+      throw Boom.conflict(user[0].username === userDTO.username ? 'username already exists' : 'email already exists');
+    }
     user = new UserModel(userDTO);
     user.password = await bcrypt.hash(user.password, 10);
     return await user.save();

@@ -2,5 +2,5 @@
   "singleQuote": true,
   "arrowParens": "always",
   "parser": "flow",
-  "printWidth":120
+  "printWidth":400
 }
