@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
-    "test": "jest --watchAll --verbose"
+    "test": "jest --silent",
+    "doc": "apidoc -i doc/endpoints -o doc/static"
   },
   "dependencies": {
     "bcrypt": "^3.0.6",

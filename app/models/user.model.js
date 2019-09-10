@@ -1,6 +1,4 @@
 const mongoose = require('mongoose');
-const Boom = require('boom');
-const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
 const UserSchema = new mongoose.Schema({
@@ -54,19 +52,5 @@ UserSchema.methods.generateAuthToken = function() {
 };
 
 const UserModel = mongoose.model('user', UserSchema);
-
-UserModel.createUser = async (userDTO) => {
-  try {
-    let user = await UserModel.find({ $or: [{ email: userDTO.email }, { username: userDTO.username }] });
-    if (user.length > 0) {
-      throw Boom.conflict(user[0].username === userDTO.username ? 'username already exists' : 'email already exists');
-    }
-    user = new UserModel(userDTO);
-    user.password = await bcrypt.hash(user.password, 10);
-    return await user.save();
-  } catch (err) {
-    throw err;
-  }
-};
 
 module.exports = UserModel;

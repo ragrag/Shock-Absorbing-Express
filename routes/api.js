@@ -8,15 +8,13 @@ const validateId = require('../app/Utils/middlewares/validateObjectId.middleware
 const router = express.Router();
 
 /* Authentication Routes */
-router.post('/register', UserController.registerUser);
-router.post('/login', UserController.loginUser);
 router.post('/oauth/facebook', [passport.authenticate('facebook-token', { session: false })], UserController.authenticateSocial);
 router.post('/oauth/twitter', [passport.authenticate('twitter-token', { session: false })], UserController.authenticateSocial);
 
 /* User routes */
-router.get('/user/:id', [validateId], UserController.show);
-router.patch('/user', [passport.authenticate('jwt', { session: false })], UserController.update);
-router.delete('/user', [passport.authenticate('jwt', { session: false })], UserController.destroy);
+router.get('/user/:id', [validateId], UserController.getUser);
+router.patch('/user', [passport.authenticate('jwt', { session: false })], UserController.updateUser);
+router.delete('/user', [passport.authenticate('jwt', { session: false })], UserController.deleteUser);
 
 /* Cat routes */
 router.get('/cats', CatController.index);
