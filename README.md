@@ -1,2 +1,2 @@
-# Node-MVCS-API
- A Nodejs RESTful API Built with MVCS Architecture
+# Node-MCS-API
+A Shock Absorbing Express API Scaffold
